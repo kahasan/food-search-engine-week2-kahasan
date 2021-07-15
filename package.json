@@ -1,15 +1,25 @@
 {
-    "name": "week1-homework",
-    "version": "1.0.0",
-    "main": "index.js",
-    "repository": "https://github.com/kodin21/week1-homework.git",
-    "author": "Berkay Aydın <sbayd06@gmail.com>",
-    "license": "MIT",
-    "scripts": {
-      "start": "parcel index.html"
-    },
-    "devDependencies": {
-      "parcel-bundler": "^1.12.5"
-    }
+  "name": "week1-homework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/kodin21/week1-homework.git",
+  "author": "Berkay Aydın <sbayd06@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "parcel-bundler": "^1.12.5"
+  },
+  "dependencies": {
+    "airtable": "^0.11.1",
+    "dotenv": "^5.0.1",
+    "fuse.js": "^6.4.6"
   }
-  
+}
