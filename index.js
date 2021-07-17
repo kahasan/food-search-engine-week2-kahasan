@@ -1,9 +1,6 @@
 import 'regenerator-runtime/runtime';
 import Fuse from 'fuse.js';
 
-import dotenv from 'dotenv';
-dotenv.config();
-
 import { getTable } from './lib/airtable';
 
 class SearhFood {
@@ -18,6 +15,7 @@ class SearhFood {
 
     this.input.addEventListener('input', (e) => {
       console.log('triggered');
+      //debouncing func for avoid unnecessary searh event
       function debounce(func, timeout = 300) {
         let timer;
         return (...args) => {
@@ -27,12 +25,15 @@ class SearhFood {
           }, timeout);
         };
       }
+      //send input valut to searhItem func with debounce func
+      //with that way searchItem func will triggered after 300ms
       const processChange = debounce(() => this.searchItem(e.target.value));
       processChange();
     });
   }
 
   searchItem(value) {
+    //if there is nothin in input then just pass the func
     if (!value) return;
     const options = {
       keys: ['strMeal'],
@@ -42,10 +43,12 @@ class SearhFood {
     const searhResponse = value && fuse.search(value);
     const newResponse = searhResponse.map(({ item }) => ({ ...item }));
     this.store.meals = newResponse;
+
     this.showCard();
   }
 
   showCard() {
+    //reset cards html avoid of repetition
     this.cards.innerHTML = '';
 
     const mealsData = this.store.meals.map((meal) => {
@@ -55,6 +58,7 @@ class SearhFood {
   }
 
   createCard(item) {
+    //basic dom operations
     const { strMeal, strMealThumb, strArea, isFavorited } = item;
 
     const card = document.createElement('div');
@@ -66,6 +70,7 @@ class SearhFood {
     card.classList.add('card');
     favBtn.classList.add('fav-btn');
 
+    //if the meal in favorites this icon changes
     favBtn.src = isFavorited ? 'liked.svg' : 'like.svg';
     mealTitle.innerText = strMeal;
     mealImg.src = strMealThumb;
@@ -79,8 +84,12 @@ class SearhFood {
   }
 }
 
+//get data from airtable api
 (async function getData() {
   await getTable('Meals').then((res) => {
+    //to get same value with reponse of fuse.search,
+    //iteration response variable.
+    //Your this.store.meals variable will be like that format {item: sameData}
     const response = res.map((item) => ({ item: { ...item } }));
     new SearhFood(response);
   });
