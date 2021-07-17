@@ -1,0 +1,13 @@
+#js-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+img {
+  width: 200px;
+}
+
+.card {
+  margin-left: 20px;
+  margin-right: 20px;
+}
