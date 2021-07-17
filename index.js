@@ -3,6 +3,8 @@ import Fuse from 'fuse.js';
 
 import { getTable } from './lib/airtable';
 
+const header = document.getElementById('user');
+
 class SearhFood {
   constructor(mealsObj) {
     this.store = {
@@ -14,7 +16,6 @@ class SearhFood {
     this.showCard();
 
     this.input.addEventListener('input', (e) => {
-      console.log('triggered');
       //debouncing func for avoid unnecessary searh event
       function debounce(func, timeout = 300) {
         let timer;
@@ -83,6 +84,13 @@ class SearhFood {
     this.cards.appendChild(card);
   }
 }
+
+//getch User info and change header text with user name
+(async function fetchUser() {
+  await fetch('https://jsonplaceholder.typicode.com/users/1')
+    .then((res) => res.json())
+    .then((x) => (header.innerText = x.name));
+})();
 
 //get data from airtable api
 (async function getData() {
